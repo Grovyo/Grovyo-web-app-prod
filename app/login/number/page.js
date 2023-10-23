@@ -25,6 +25,7 @@ function page() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [load, setLoad] = useState(false);
+  const [toast, setToast] = useState({ appear: false, text: "" });
 
   const handleInputChange = (event, index) => {
     const { value } = event.target;
@@ -191,14 +192,10 @@ function page() {
         } else {
           if (isValidEmail) {
             const res = await axios.post(`${API}/v1/checkacc`, {
-              email,
+              email: email,
               password: pass,
-              loc,
-              device,
-              contacts: contactList,
               type: "login",
               time: `${Date.now()}`,
-              token,
             });
             if (res.data.success) {
               if (res.data.userexists) {
@@ -215,7 +212,7 @@ function page() {
                 router.push("../main/post/Newforyou");
                 toast.success("Successfully!");
               } else {
-                toast.apply("Seems like you don't have an account in the app.");
+                console.log("Seems like you don't have an account in the app.");
                 router.push("../login/singUp");
               }
             } else {
@@ -386,7 +383,7 @@ function page() {
               className="h-[50px] w-[300px] select-none cursor-pointer bg-black  flex items-center justify-center rounded-2xl text-white "
             >
               {loading && <CgSpinner size={20} className="m-1 animate-spin" />}
-              <span className={`${loading ? "hidden" : ""}`}>Send Otp</span>
+              <span className={`${loading ? "hidden" : ""}`}>Continue</span>
             </div>
           </div>
           {/* email */}
@@ -399,6 +396,11 @@ function page() {
               <input
                 className="h-[50px] w-[300px] ring-1 ring-[#f5f5f5] bg-[#f7f7f7] rounded-2xl px-4 outline-slate-100 "
                 placeholder="Enter your email"
+                value={email}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setEmail(e.target.value);
+                }}
               />
             </div>
             <div>
@@ -409,6 +411,11 @@ function page() {
               <input
                 className="h-[50px] w-[300px] ring-1 ring-[#f5f5f5] bg-[#f7f7f7] rounded-2xl px-4 outline-slate-100 "
                 placeholder="Enter your Password"
+                value={pass}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setPass(e.target.value);
+                }}
               />
             </div>
             <div className="py-5 ">

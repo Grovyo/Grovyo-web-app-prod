@@ -33,7 +33,7 @@ function page() {
   const [genderr, setGenderr] = useState("");
   const [namee, setNamee] = useState("");
   const [dobb, setDobb] = useState("");
-  const [change, setChange] = useState(3);
+  const [change, setChange] = useState(1);
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
   const [tick, setTick] = useState(true);
